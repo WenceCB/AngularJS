@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inyección de Dependencias</title>
+</head>
+<body ng-app="test">
+
+    <!-- Vista controlada por TestCrl -->
+    <div ng-controller="TestCtrl"></div>
+
+    <!-- Vusta controlada por Test2Tctrl -->
+    <div ng-controller="Test2Ctrl"></div>
+
+    <!-- Vusta controlada por Test2Tctrl -->
+    <div ng-controller="Test3Ctrl"></div>
+
+    <!-- Cargamos la libreria de AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+
+    <script>
+
+        // Setter del módulo test.
+        angular.module("test",[]);
+
+        // Controlador con inyección de dependencias de anotación de array en línea
+        // 1ª Getter del módulo
+        angular.module("test").controller("TestCtrl", ["$scope","$location",function ($scope, $location) {
+
+        }]);
+
+        // Controlador con inyección de dependencias con propiedad $inject.
+
+        var controlador = function ($scope, $location) {};
+        controlador.$inject = ["$scope", "location"];
+        angular.module("test").controller("Test2Ctrl", controlador);
+
+        // Controlador con inyección de dependecias como parámetros de función
+
+        angular.module("test").controller("Test3Ctrl", function ($scope, $location) {
+          
+        });
+
+    </script>
+</body>
+</html>
