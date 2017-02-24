@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Controladores</title>
+</head>
+<body ng-app="test">
+
+    <!-- Barra de navegación -->
+    <nav ng-controller="BarraNavegaciónCtrl">
+        <a href="#">{{nombreSeccion1}}</a>
+        <a href="#">{{nombreSeccion2}}</a>
+        <a href="#">{{nombreSeccion3}}</a>
+        <button ng-click="mostrarMensaje()">Mostrar Mensaje</button>
+    </nav>
+
+    <!-- Cargamos la libreria de AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+    <script>
+        // Creamos un módulo test
+
+        angular.module("test",[]);
+
+        // Controlador para gestionar la barra de navegación
+
+        angular.module("test").controller("BarraNavegaciónCtrl",function ($scope) {
+
+            // Asignamos valores en el Scope para que la vista los tenga disponibles
+            $scope.nombreSeccion1 = "Mi sección";
+            $scope.nombreSeccion2 = "Otra sección molona";
+            $scope.nombreSeccion3 = "Una última sección";
+
+            // Establecemos comportamiento en el scope para que la vista los tenga disponible
+            $scope.mostrarMensaje = function () {
+              alert("Buenas noches KeepCoderos")
+            };
+        });
+
+    </script>
+</body>
+</html>
