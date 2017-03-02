@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Controladores</title>
+    <title>Controladores y Scoopes</title>
 </head>
 <body ng-app="test">
 
@@ -13,6 +13,17 @@
         <a href="#">{{nombreSeccion3}}</a>
         <button ng-click="mostrarMensaje()">Mostrar Mensaje</button>
     </nav>
+
+    <!-- Jerarquía de Controladores / Scopes -->
+    <div ng-controller="ControladorPadre">
+        <p id="pPadre">Soy un Controlador</p>
+        <button ng-click="enviarMensajeAlHijo()">Notificar al hijo</button>
+
+        <div ng-controller="ControladorHijo">
+            <p>Y yo su hijo!!</p>
+            <button ng-click="enviarMensajeAlPadre()">Notificar al Padre</button>
+        </div>
+    </div>
 
     <!-- Cargamos la libreria de AngularJS -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
@@ -34,6 +45,39 @@
             $scope.mostrarMensaje = function () {
               alert("Buenas noches KeepCoderos")
             };
+        });
+        
+        // Propagación de eventos hacia abajo
+
+            // Contolador Padre
+        
+        angular.module("test").controller("ControladorPadre",function ($scope) {
+
+            $scope.enviarMensajeAlHijo = function () {
+
+                $scope.$broadcast("EventoHaciaAbajo",document.getElementById("pPadre").textContent);
+            };
+            $scope.$on("EventoHaciaArriba",function (evento,datos) {
+                evento.preventDefault();
+                alert(datos);
+            })
+        });
+
+            // Contolador Hijo
+        
+        angular.module("test").controller("ControladorHijo",function ($scope) {
+
+            $scope.$on("EventoHaciaAbajo",function (evento,datos) {
+                // Con evento.preventDefault paramos la propagación del evento.
+               evento.preventDefault();
+                alert("Mi padre me dice que "+datos);
+
+            });
+
+            $scope.enviarMensajeAlPadre = function(){
+              $scope.$emit("EventoHaciaArriba","Hola Papá");
+            };
+
         });
 
     </script>
